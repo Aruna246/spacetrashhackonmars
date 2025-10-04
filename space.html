@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainable Mars Base</title>
+    <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'mars-dark': 'rgb(67, 104, 121)', 
+                        'nav-hover': 'rgb(51, 51, 104)', 
+                        'mars-highlight': '#FFB380',
+                        'primary-color': '#FF7A4D', 
+                        'secondary-color': '#343a40',
+                        'deep-space': '#08081a', 
+                    }
+                }
+            }
+        }
+    </script>
+
+<style>
+
+    :root {
+        --primary-color: #FF7A4D; 
+        --secondary-color: #343a40; 
+        --mars-highlight: #FFB380; 
+        
+        
+        --site-bg: #08081a; 
+    }
+
+    
+    body {
+        margin: 0;
+        padding: 0;
+        color: white;
+        min-height: 100vh;
+        font-family: 'Inter', sans-serif;
+        
+       
+        background-color: var(--site-bg); 
+        background-image: none; 
+        background-attachment: scroll;
+        background-size: auto;
+    }
+
+
+    .content-section-wrapper {
+        background-color: transparent; 
+        padding-top: 50px;
+        padding-bottom: 50px;
+        border-bottom: 1px solid rgba(255, 122, 77, 0.3); 
+        min-height: 50vh;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    h2, p {
+        margin: 10px;
+    }
+    
+    
+    #main-nav { 
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: rgba(8, 8, 26, 0.95); 
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        display: flex; 
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(255, 122, 77, 0.2); 
+        border-bottom: 2px solid var(--primary-color);
+    }
+    
+    #main-nav li { 
+        float: none; 
+        text-align: center;
+    }
+    
+    #main-nav .icon-container {
+        display: none;
+    }
+
+    #main-nav li a { 
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: large; 
+        white-space: nowrap; 
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    #main-nav li a:hover:not(.active) { 
+        background-color: rgba(51, 51, 104, 0.7);
+        color: var(--mars-highlight); 
+    }
+
+    #main-nav li a.active { 
+        background-color: rgba(51, 51, 104, 0.8);
+        color: var(--primary-color); 
+    }
+    
+    
+    .home {
+        position: relative;
+        overflow: hidden; 
+        height: 100vh; 
+        max-height: 900px; 
+        padding-top: 60px; 
+        box-sizing: border-box;
+    }
+
+   
+    .home::before {
+        content: '';
+        position: absolute;
+        top: 60px; 
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to top, var(--site-bg) 0%, transparent 80%);
+        z-index: 40;
+    }
+
+    #hero-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(70%); 
+        margin-top: -60px; 
+    }
+    
+    #hero-overlay {
+        color: white;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.8); 
+        z-index: 50;
+    }
+    
+    .hero-title {
+        font-size: 5rem; 
+        font-weight: 900;
+        letter-spacing: 0.2em;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        color: var(--mars-highlight); 
+        text-shadow: 0 0 20px rgba(255, 179, 128, 0.8);
+        line-height: 1;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.8rem; 
+        font-weight: 300;
+        letter-spacing: 0.1em;
+        margin-top: 0;
+        margin-bottom: 2rem;
+    }
+
+    .scroll-down-btn {
+        background-color: var(--primary-color);
+        padding: 10px 25px;
+        border-radius: 9999px; 
+        text-transform: uppercase;
+        font-weight: 700;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 0 10px rgba(255, 122, 77, 0.5);
+    }
+    .scroll-down-btn:hover {
+        background-color: #ff6338;
+        transform: scale(1.05);
+    }
+    
+ 
+    h1:not(.hero-title) {
+        margin-top: 0;
+        text-align: center; 
+        padding: 0 10px 25px 10px;
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        position: relative;
+    }
+    
+    h1:not(.hero-title)::after {
+        content: '';
+        position: absolute;
+        bottom: 10px; 
+        left: 50%;
+        transform: translateX(-50%); 
+        width: 150px; 
+        height: 6px; 
+        background-color: var(--primary-color);
+        border-radius: 3px;
+        box-shadow: 0 0 15px var(--primary-color), 0 0 5px rgba(255, 122, 77, 0.8);
+    }
+
+  
+    .w3-content {
+        display: flex;
+        flex-wrap: wrap; 
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .mySlides {
+        display: none;
+        width: 100%;
+        max-width: 400px; 
+        height: 250px;
+        object-fit: cover;
+        border-radius: 8px;
+        flex-shrink: 0;
+    }
+
+    .about-text-container {
+        flex: 1;
+        min-width: 300px; 
+        max-width: 700px;
+        padding: 20px 0;
+        text-align: left; 
+    }
+    
+    .about-text-container p {
+        font-size: large;
+        line-height: 1.6;
+        margin: 0;
+        text-align: left; 
+    }
+    
+  
+    @media (max-width: 768px) {
+        
+        .home {
+            height: 80vh; 
+            max-height: none;
+        }
+
+        .hero-title {
+            font-size: 2.2rem; 
+            letter-spacing: 0.1em;
+        }
+        .hero-subtitle {
+            font-size: 0.9rem; 
+            letter-spacing: 0.05em;
+        }
+        
+     
+        #main-nav {
+            justify-content: flex-start; 
+            flex-direction: row; 
+            position: relative; 
+            overflow: hidden;
+            height: 60px;
+            background-color: var(--site-bg); 
+        }
+
+        #main-nav li:not(.icon-container) {
+            display: none;
+        }
+
+        #main-nav .icon-container {
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 0;
+            line-height: 60px; 
+        }
+        
+        #main-nav .icon-container a {
+            padding: 14px 20px;
+            font-size: 24px;
+        }
+
+        #main-nav.responsive {
+            display: flex; 
+            flex-direction: column; 
+            height: auto; 
+            align-items: flex-start; 
+        }
+
+        #main-nav.responsive li {
+            display: block;
+            width: 100%;
+            text-align: left;
+            float: none;
+        }
+        
+        #main-nav.responsive .icon-container {
+            position: static; 
+            right: auto;
+            top: auto;
+            text-align: right; 
+        }
+        
+        h1:not(.hero-title) {
+            font-size: 1.8rem;
+        }
+        h1:not(.hero-title)::after {
+            width: 100px; 
+            bottom: 5px; 
+            height: 4px; 
+        }
+        
+       
+        .w3-content {
+            flex-direction: column; 
+            gap: 20px;
+            align-items: center; 
+        }
+        .about-text-container {
+            padding: 0 20px;
+            
+            text-align: left; 
+            max-width: 100%; 
+            min-width: 100%; 
+        }
+        .about-text-container p {
+            font-size: 1rem; 
+            text-align: left; 
+            padding: 0;
+            margin: 0 auto;
+        }
+        .mySlides {
+             max-width: 90%;
+        }
+    
+        
+        .box p {
+            font-size: 13px;
+        }
+        
+        .safety-card p {
+            font-size: 0.85rem;
+        }
+        
+        .home::before {
+            top: 0;
+        }
+    }
+    
+  
+    .container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 20px;
+        max-width: 1000px; 
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    .box {
+        padding: 10px;
+        text-align: center;
+        border-radius: 8px; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        border: none; 
+        background-color: #fff; 
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        color: #333; 
+    }
+
+    .box img {
+        max-width: 100%;
+        height: 150px; 
+        object-fit: cover;
+        display: block; 
+        margin: 0 auto;
+        border-radius: 4px; 
+    }
+
+    .box:hover {
+        transform: translateY(-5px); 
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+    }
+
+    .box p {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #333;
+        text-align: left; 
+    }
+
+    @media (max-width: 1024px) {
+        .container {
+            grid-template-columns: repeat(2, 1fr); 
+        }
+    }
+
+    @media (max-width: 640px) {
+        .container {
+            grid-template-columns: 1fr; 
+        }
+        .box img {
+            height: 200px;
+            object-fit: cover;
+        }
+    }
+    
+    .z {
+        display: flex;
+        flex-wrap: wrap; 
+        gap: 40px; 
+        justify-content: center;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+        border-radius: 8px;
+    }
+
+    .side {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex: 1; 
+        min-width: 300px; 
+    }
+
+    .x {
+        width: 100%; 
+        height: 98px;
+        line-height: normal; 
+        text-align: left; 
+        padding: 15px; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        
+        background-color: #1A1A2E; 
+        color: white;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        border-left: 4px solid var(--primary-color);
+    }
+    
+    .x h2 {
+        margin: 0;
+        font-size: 1.2rem;
+        line-height: 1.4;
+    }
+
+    .x:hover {
+        background-color: #282840; 
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+  
+    .main-container {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 50px; 
+        padding: 30px;
+        margin-bottom: 30px;
+        background-color: #ffffff; 
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); 
+        transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    }
+
+    .feature-item:hover {
+        transform: translateY(-5px); 
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-item:nth-child(even) {
+        flex-direction: row-reverse; 
+    }
+    
+    .circle-image {
+        width: 180px; 
+        height: 180px;
+        min-width: 180px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 5px solid var(--primary-color); 
+        box-shadow: 0 0 0 8px rgba(255, 122, 77, 0.2); 
+        transition: border-color 0.3s ease;
+    }
+
+    .circle-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .explanation h2 {
+        color: var(--secondary-color);
+        font-size: 1.8em;
+        font-weight: 700;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .explanation p {
+        font-weight: 300; 
+        line-height: 1.7;
+        color: #6c757d;
+    }
+
+    @media (max-width: 768px) {
+        .feature-item,
+        .feature-item:nth-child(even) {
+            flex-direction: column;
+            text-align: center;
+            gap: 20px;
+        }
+        
+        .circle-image {
+            width: 120px;
+            height: 120px;
+            min-width: 120px;
+            margin: 0 auto; 
+        }
+        .explanation h2 { text-align: center; }
+        .explanation p { text-align: center; }
+        .feature-item { padding: 20px; }
+    }
+    
+    
+    .safety-grid {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 25px;
+    }
+    
+    .safety-card {
+        background-color: #282840; 
+        padding: 25px;
+        border-radius: 12px;
+        border-left: 6px solid var(--primary-color); 
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        transition: transform 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    
+    .safety-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(255, 122, 77, 0.2);
+    }
+    
+    .safety-card h3 {
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 0;
+        line-height: 1.4;
+        display: flex;
+        align-items: flex-start; 
+        margin-bottom: 10px;
+    }
+    
+    .safety-card h3 span {
+        font-size: 1.8rem;
+        font-weight: 900;
+        color: var(--mars-highlight);
+        margin-right: 15px;
+        line-height: 1;
+        flex-shrink: 0; 
+    }
+
+    .safety-card p {
+        color: #B0B0C4; 
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin: 0;
+        padding-left: 30px; 
+    }
+    
+    @media (max-width: 768px) {
+        .safety-grid {
+            grid-template-columns: 1fr;
+        }
+        .safety-card p {
+             padding-left: 5px; 
+        }
+        
+    }
+    
+ 
+    .cert-box {
+        border: solid 1px var(--mars-highlight); 
+        max-width: 800px; 
+        width: 90%;
+        margin: 20px auto;
+        padding: 20px;
+        box-shadow: 0px 0px 10px var(--mars-highlight);
+        border-radius: 10px;
+        text-align: left; 
+        background-color: transparent; 
+    }
+    .cert-box h2 {
+        margin-top: 0;
+        text-align: center;
+    }
+
+    .footer-bottom {
+        background-color: #000;
+        text-align: center;
+        padding: 20px 0;
+        margin-top: 0; 
+        font-size: x-large; 
+        color: rgba(255, 255, 255, 0.6);
+        border-top: none; 
+    }
+    .footer-bottom p {
+        margin: 0;
+    }
+    .footer-bottom p span {
+        color: var(--mars-highlight);
+        font-weight: bold;
+    }
+    
+</style>
+</head>
+<body>
+
+
+    <ul id="main-nav">
+        <li class="icon-container">
+            <a href="javascript:void(0);" class="icon" onclick="toggleNav()">
+                &#9776; 
+            </a>
+        </li>
+        
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="#about-section">About</a></li>
+        <li><a href="#recycling-mars">Recycling on Mars</a></li>
+        <li><a href="#end-products">End Products</a></li>
+        <li><a href="#martian-soil">Martian Soil Use</a></li>
+        <li><a href="#safety">Health & Safety</a></li>
+        <li><a href="#resources">Resources</a></li>
+    </ul>
+
+<div id="home" class="home">
+   
+    <img id="hero-image" src="img/ims1.jpg" onerror="this.onerror=null;this.src='https://placehold.co/1920x650/111111/FFFFFF?text=Martian+Base';" alt="Martian Base Hero" class="w-full h-auto max-h-[650px] object-cover">
+    
+ 
+    <div id="hero-overlay" class="absolute inset-0 flex flex-col justify-center items-center text-center p-4" style="margin-top: 60px;">
+        <h1 class="hero-title">SPACE TRASH HACK</h1>
+        <p class="hero-subtitle">The Mission for a Sustainable Red Planet</p>
+        <a href="#about-section" class="scroll-down-btn">DISCOVER THE MISSION ↓</a>
+    </div>
+    
+</div>
+
+<div class="content-section-wrapper">
+    <section class="About" id="about-section">
+        <div class="color">
+            <div class="about">
+                <h1>About</h1>
+            </div>
+            
+            <div class="w3-content w3-section">
+               
+                <img class="mySlides" src="img/imspace6.jpg" onerror="this.onerror=null;this.src='https://placehold.co/400x250/282840/FFFFFF?text=Mars+Habitat+1';" alt="Mars Slide 1">
+                <img class="mySlides" src="img/imspace7.jpg" onerror="this.onerror=null;this.src='https://placehold.co/400x250/282840/FFFFFF?text=Mars+Habitat+2';" alt="Mars Slide 2">
+                <img class="mySlides" src="img/imspace8.jpg" onerror="this.onerror=null;this.src='https://placehold.co/400x250/282840/FFFFFF?text=Mars+Habitat+3';" alt="Mars Slide 3">
+                
+                <div class="about-text-container">
+                    <p>✅Space exploration is not only about reaching Mars-it's about sustaining life once we get there.</p>
+                        <p>✅During long-duration missions, astronauts generate thousands of kilograms of waste, from food packaging and fabrics to structural materials and protective gear.</p>
+                        <p>✅Instead of discarding these materials, SpaceTrash Hack aims to transform trash into treasure, ensuring every resource counts on the Red Planet.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="content-section-wrapper">
+    <div id="recycling-mars"><h1>Recycling on Mars</h1></div><br><br>
+    <div class="container">
+        
+        <div class="box">
+            <img src="img/ims2.jpg" onerror="this.onerror=null;this.src='https://placehold.co/300x150/f0f0f0/333333?text=Water';" alt="Water Recycling Image">
+            <h2 style="color: #333;">Water Recycling</h2>
+            <p>Urine & sweat recovery -> Purified back into drinking water using advanced filtration and distillation systems. Greywater reuse -> Water from showers and cleaning is treated and reused for irrigation or technical use. Atmospheric moisture capture -> Collecting water vapor from breathing and condensation inside habitats.</p>
+        </div>
+        <div class="box">
+            <img src="img/ims3.jpg" onerror="this.onerror=null;this.src='https://placehold.co/300x150/f0f0f0/333333?text=Air';" alt="Air Recycling Image">
+            <h2 style="color: #333;">Air Recycling</h2>
+            <p>CO<sub>2</sub> scrubbing -> Removing carbon dioxide exhaled by humans using filters (e.g., lithium hydroxide, zeolites, or solid oxide systems). Oxygen regeneration -> Splitting CO<sub>2</sub> into oxygen and carbon monoxide (e.g., NASA’s MOXIE experiment on Mars Perseverance rover). Plant-based recycling -> Using plants and algae to absorb CO<sub>2</sub> and release oxygen while producing food.</p>
+        </div>
+        <div class="box">
+            <img src="img/ims4.jpg" onerror="this.onerror=null;this.src='https://placehold.co/300x150/f0f0f0/333333?text=Solid+Waste';" alt="Solid Waste Recycling Image">
+            <h2 style="color: #333;"> Solid Waste Recycling</h2>
+            <p>Biodegradable waste -> Composting human and plant waste for fertilizer. Plastics & packaging -> Shredded and remelted into 3D printer filament for tools and spare parts. Metals & glass -> Smelted and reused in construction or repairs.</p>
+        </div>
+        <div class="box">
+            <img src="img/ims5.jpg" onerror="this.onerror=null;this.src='https://placehold.co/300x150/f0f0f0/333333?text=Energy';" alt="Energy Recycling Image">
+            <h2 style="color: #333;">Energy Recycling</h2>
+            <p>Waste heat recovery -> Heat from nuclear or solar systems reused for habitat warming. Biogas production -> Organic waste converted into methane and hydrogen for energy and fuel.</p>
+        </div>
+        <div class="box">
+            <img src="img/ims6.jpg" onerror="this.onerror=null;this.src='https://placehold.co/300x150/f0f0f0/333333?text=Human+Waste';" alt="Human Waste Recycling Image">
+            <h2 style="color: #333;">Human Waste Recycling</h2>
+            <p>Nutrients recovery -> Extract nitrogen, phosphorus, and potassium for hydroponics or soil enrichment. Urine processing -> Urea can be used in fertilizer production or even in concrete-like building materials for Mars.</p>
+        </div>
+        <div class="box">
+            <img src="img/ims7.jpg" onerror="this.onerror=null;this.src='https://placehold.co/300x150/f0f0f0/333333?text=Materials';" alt="Habitat Recycling Image">
+            <h2 style="color: #333;">Habitat & Material Recycling</h2>
+            <p>Regolith recycling -> Local Martian soil processed to make bricks, concrete, or 3D-printed structures. Clothing & textiles -> Recycled into insulation or repurposed for tools.</p>
+        </div>
+    </div>
+</div>
+
+<div class="content-section-wrapper">
+    <h1 id="end-products">End Products</h1>
+
+    <div class="z">
+        <div class="side left-side">
+            <div class="x">
+                <h2>Water Recycling Products: <br>Clean water for drinking and hygiene.</h2></div>
+            <div class="x"><h2>Atmospheric Processing: <br> Oxygen for breathing.</h2></div>
+            <div class="x"><h2>Waste-to-Energy: <br> Electricity and heat.</h2></div>
+            <div class="x"><h2>Plastic Recycling: <br> Recycled plastic products (e.g., containers, tools).</h2></div>
+            <div class="x"><h2>Metal Recycling: <br> Reusable metals (e.g., aluminum, steel).</h2></div>
+        </div>
+
+        <div class="side right-side">
+            <div class="x"><h2>Glass Recycling: <br> Recycled glass products (e.g., windows, containers).</h2></div>
+            <div class="x"><h2>Organic Waste Recycling: <br>Nutrient-rich soil for growing food.</h2></div>
+            <div class="x"><h2>Paper Recycling: <br> Recycled paper products (e.g., packaging, documents).</h2></div>
+            <div class="x"><h2>Fuel Production: <br>Fuel for transportation and energy generation.</h2></div>
+            <div class="x"><h2>Construction Materials: <br> Recycled materials for building habitats and infrastructure.</h2></div>
+        </div>
+    </div>
+</div>
+
+<div class="content-section-wrapper">
+    <h1 id="martian-soil">Use of Martian Soil</h1><br><br>
+    <div class="main-container">
+
+        <div class="feature-item">
+            <div class="circle-image"><img src="img/ims14.jpg" onerror="this.onerror=null;this.src='https://placehold.co/180x180/343a40/FFFFFF?text=🧱';" alt="Building Icon"></div>
+            <div class="explanation">
+                <h2>1. 🧱 Building Material</h2>
+                <p>Regolith can be processed and 3D-printed into durable structures, like bricks or concrete, for astronaut habitats on the Moon or Mars.</p>
+            </div>
+        </div>
+
+        <div class="feature-item">
+            <div class="circle-image"><img src="img/ims15.jpg" onerror="this.onerror=null;this.src='https://placehold.co/180x180/343a40/FFFFFF?text=💧';" alt="Water Icon"></div>
+            <div class="explanation">
+                <h2>2. 💧 Water Extraction</h2>
+                <p>Water ice within the regolith can be melted, purified, and used for essential functions like drinking, life support, and agriculture.</p>
+            </div>
+        </div>
+
+        <div class="feature-item">
+            <div class="circle-image"><img src="img/ims10.jpg" onerror="this.onerror=null;this.src='https://placehold.co/180x180/343a40/FFFFFF?text=🌱';" alt="Plant Icon"></div>
+            <div class="explanation">
+                <h2>3. 🌱 Plant Growth</h2>
+                <p>After treatment to remove harmful elements, regolith can be used as a soil substitute to grow crops in controlled space environments.</p>
+            </div>
+        </div>
+        
+        <div class="feature-item">
+            <div class="circle-image"><img src="img/ims16.jpg" onerror="this.onerror=null;this.src='https://placehold.co/180x180/343a40/FFFFFF?text=🔋';" alt="Oxygen Icon"></div>
+            <div class="explanation">
+                <h2>4. 🔋 Oxygen Production</h2>
+                <p>Oxides present in the lunar or Martian soil can be chemically split to release breathable oxygen for habitat and EVA use.</p>
+            </div>
+        </div>
+        
+        <div class="feature-item">
+            <div class="circle-image"><img src="img/ims17.jpg" onerror="this.onerror=null;this.src='https://placehold.co/180x180/343a40/FFFFFF?text=🛡️';" alt="Shielding Icon"></div>
+            <div class="explanation">
+                <h2>5. 🛡️ Radiation Shielding</h2>
+                <p>Thick layers of regolith provide natural, effective protection against dangerous cosmic and solar radiation for underground bases.</p>
+            </div>
+        </div>
+        
+        <div class="feature-item">
+            <div class="circle-image"><img src="img/ims18.jpg" onerror="this.onerror=null;this.src='https://placehold.co/180x180/343a40/FFFFFF?text=🔥';" alt="Fuel Icon"></div>
+            <div class="explanation">
+                <h2>6. 🔥 Fuel Production</h2>
+                <p>The extracted oxygen can be combined with hydrogen (or other elements) to create storable rocket fuel for return journeys or trips to other destinations.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="content-section-wrapper">
+    <div class="max-w-7xl mx-auto" id="safety">
+        <h1>Health & Safety</h1>
+
+        <div class="safety-grid">
+
+            <div class="safety-card">
+                <h3><span>1.</span> General Principle</h3>
+                <p>All recycling activities must protect crew health and the Martian environment.</p>
+            </div>
+
+            <div class="safety-card">
+                <h3><span>2.</span> Main Rules (Prohibited)</h3>
+                <p>🚫 No incineration (burning). 🚫 No toxic gas emissions. 🚫 No PFAS or microplastics release.</p>
+            </div>
+
+            <div class="safety-card">
+                <h3><span>3.</span> Crew Safety (PPE)</h3>
+                <p>Masks/respirators, gloves, safety goggles, and protective suits must be worn during handling of hazardous waste.</p>
+            </div>
+
+            <div class="safety-card">
+                <h3><span>4.</span> Monitoring</h3>
+                <p>Air, dust, and water samples must be continuously checked for contaminants using automated sensors.</p>
+            </div>
+
+            <div class="safety-card">
+                <h3><span>5.</span> Automation Safety</h3>
+                <p>Recycling machines should run in a fault-safe way to reduce direct human exposure to waste and processes.</p>
+            </div>
+
+            <div class="safety-card">
+                <h3><span>6.</span> Emergency Protocol</h3>
+                <p>Evacuate immediately if gas or radiation alarms trigger. Use emergency oxygen and designated first-aid stations.</p>
+            </div>
+
+            <div class="safety-card">
+                <h3><span>7.</span> Recycled Material Safety</h3>
+                <p>All recycled products must pass chemical and structural testing before being approved for crew use.</p>
+            </div>
+            
+            <div class="safety-card">
+                <h3><span>8.</span> Future Use Conditions</h3>
+                <p>Recycled regolith must only be used in food/plant systems after extensive, validated biological safety testing.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="content-section-wrapper">
+    <h1 id="resources">Resources</h1>
+    <div class="cert-box">
+        <h2>NASA Mars Simulation Resources:</h2>
+        <p>Focus: Tools and datasets essential for creating and testing systems in conditions that closely mimic the Martian environment (e.g., atmosphere, temperature, gravity, radiation, communication delays). Purpose: To validate hardware, test operational protocols, study crew health and performance (like in the CHAPEA missions), and refine mission architectures before sending human crews.</p>
+    </div>
+    <div class="cert-box">
+        <h2>MGS-1 Mars Global Simulant:</h2>
+        <p>Focus: A high-fidelity, terrestrial material specifically formulated to replicate the physical, chemical, and mineralogical properties of Martian regolith (soil). Purpose: Provides a standardized, accessible material for researchers to conduct experiments on the Martian surface, particularly for ISRU, construction (3D printing), and geotechnical studies, without having actual Martian soil.</p>
+    </div>
+    <div class="cert-box">
+        <h2>ISRU (In-Situ Resource Utilization):</h2>
+        <p>Focus: NASA projects and technologies aimed at using local Mars resources (e.g., atmospheric CO<sub>2</sub>, water ice, regolith) to create consumables (e.g., oxygen, water, propellant, building materials). Purpose: Reduces the mass and cost of missions by minimizing the supplies that need to be launched from Earth, a critical step for long-duration and sustainable exploration. A prime example is the MOXIE experiment on the Perseverance rover, which generates oxygen from the Martian atmosphere.</p></div>
+    <div class="cert-box">
+        <h2>Research on Recycling Technologies & Scientific Journals & Studies (Waste Recycling):</h2>
+        <p>Focus: Academic papers, experiments, and projects centered on managing and reusing waste streams (e.g., fabrics, food packaging, human waste, structural materials) in space environments. Purpose: Essential for closed-loop life support systems and sustainability. Technologies are being developed to convert non-metabolic waste into usable products like 3D printing feedstock, or to recover resources like water and oxygen, which is vital for long-duration missions where resupply is impractical or impossible.</p></div>
+</div>
+
+<div class="footer-bottom">
+    <p>&copy; 2025 <span>SpaceTrash Hack</span>. All rights reserved. Designed for a sustainable Mars.</p>
+</div>
+
+<script>
+    
+    var myIndex = 0;
+   
+    document.addEventListener('DOMContentLoaded', function() {
+        if (document.getElementsByClassName("mySlides").length > 0) {
+            carousel();
+        }
+    });
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        if (x.length === 0) return; 
+        
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";  
+        }
+        myIndex++;
+        if (myIndex > x.length) {myIndex = 1}    
+        x[myIndex-1].style.display = "block";  
+        setTimeout(carousel, 2000); 
+    }
+    
+   
+    function toggleNav() {
+        var x = document.getElementById("main-nav");
+        x.classList.toggle("responsive");
+    }
+
+  
+    document.addEventListener('DOMContentLoaded', function() {
+        var navLinks = document.querySelectorAll('#main-nav li a:not(.icon)');
+        
+        navLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                var navBar = document.getElementById('main-nav');
+          
+                if (navBar.classList.contains('responsive')) {
+                    navBar.classList.remove('responsive');
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
